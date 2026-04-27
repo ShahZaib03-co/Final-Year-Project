@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Secure Blog Management System API
+  version: 1.0.0
+  description: Production-ready API for blog management with authentication, file uploads, and comments
+
+servers:
+  - url: http://localhost:5000/api
+    description: Development server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        200:
+          description: Server is healthy
+
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: User registered successfully
+
+  /auth/login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login successful
+
+  /blogs:
+    get:
+      summary: Get all blogs
+      responses:
+        200:
+          description: List of blogs
+    post:
+      summary: Create a new blog
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        201:
+          description: Blog created successfully
+
+  /blogs/{id}:
+    get:
+      summary: Get blog by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Blog details
+    put:
+      summary: Update blog
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Blog updated
+    delete:
+      summary: Delete blog
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Blog deleted
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

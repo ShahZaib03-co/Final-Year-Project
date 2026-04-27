@@ -1,0 +1,15 @@
+{
+  "name": "blog-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "backend": "npm --prefix backend/src run dev",
+    "frontend": "npm --prefix frontend/src run dev",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "install-all": "npm install --prefix backend/src && npm install --prefix frontend/src"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
