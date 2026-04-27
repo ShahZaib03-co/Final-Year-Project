@@ -96,22 +96,11 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'Welcome to Secure Blog API. Use /api/docs for API docs or open the frontend at http://localhost:5175',
+    message: 'Welcome to Secure Blog API. Use /api/docs for API docs or open the frontend at http://localhost:5173',
     docs: '/api/docs',
-    frontend: 'http://localhost:5175',
+    frontend: 'http://localhost:5173',
   });
 });
-
-// ========================
-// API Documentation
-// ========================
-try {
-  const YAML = require('yamljs');
-  const swaggerDoc = YAML.load(path.join(__dirname, '../swagger.yaml'));
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
-} catch (_) {
-  // Swagger optional
-}
 
 // 404 handler
 app.all('*', (req, res, next) => {
